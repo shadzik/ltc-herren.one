@@ -32,6 +32,14 @@ async function scrapeTable(url) {
 
   browser.close();
   console.log("</div>");
+  var d = new Date();
+  var currentDate = d.getDate() + "."
+                + (d.getMonth()+1)  + "." 
+                + d.getFullYear();  
+
+  var currentTime = d.toLocaleTimeString('de-DE', { hour12: false })
+
+  console.log("<div>Scraped: " + currentDate + " " + currentTime + "</div>");
 }
 
 
