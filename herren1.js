@@ -10,6 +10,7 @@ async function scrapeTable(url) {
   const title = await page.evaluate(el => el.textContent, el[0]);
   console.log("<div class='container'>");
   console.log("<h3>"+title+"</h3>");
+  console.log('<div class="mb-4"></div>');
 
   const xpaths = ['//*[@id="content-row2"]/table[1]', '//*[@id="content-row2"]/table[2]'];
   for (let xpath of xpaths) {
@@ -28,10 +29,10 @@ async function scrapeTable(url) {
 	  })
 	  const result = await page.evaluate(el => el.outerHTML, table[0]);
 	  console.log(result);
+    console.log('<div class="mb-4"></div>');
   }
 
   browser.close();
-  console.log("</div>");
   var d = new Date();
   var currentDate = d.getDate() + "."
                 + (d.getMonth()+1)  + "." 
@@ -40,6 +41,7 @@ async function scrapeTable(url) {
   var currentTime = d.toLocaleTimeString('de-DE', { hour12: false })
 
   console.log("<div>Scraped: " + currentDate + " " + currentTime + "</div>");
+  console.log("</div>");
 }
 
 
