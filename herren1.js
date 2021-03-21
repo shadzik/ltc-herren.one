@@ -23,7 +23,12 @@ async function scrapeTable(url) {
     })
 	  const data = await page.evaluate(() => {
 	    const anchors = Array.from(document.querySelectorAll('table tbody tr td a'));
-	    anchors.map(td => td.setAttribute('href', "https://tvbb.liga.nu" + td.getAttribute('href')));
+	    anchors.map(td => {
+        var href = td.getAttribute('href');
+        if (!href.includes('tvbb.liga.nu')) {
+          td.setAttribute('href', "https://tvbb.liga.nu" + td.getAttribute('href'));
+        }
+      });
 	    const links = anchors.map(td => td.getAttribute('href'));
 	    return links;
 	  })
@@ -45,6 +50,9 @@ async function scrapeTable(url) {
 }
 
 
+// 2021
 scrapeTable('https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2021&group=1635442');
-//scrapeTable('https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?targetFed=TVBB&championship=TVBB+Sommer+2021&group=1609669')
-//scrapeTable('https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2021&group=1623544')
+// 2020
+// scrapeTable('https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2020&group=1539516');
+// 2019
+// scrapeTable('https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2019&group=1428138');
