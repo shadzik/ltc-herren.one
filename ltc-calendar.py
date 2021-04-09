@@ -49,12 +49,5 @@ print(f'''
       </div>
     </div>
 
-    <div class="mb-4"></div>
-    <h3>Ganzer Kalendar</h3>
     </div> <!-- container -->
-
-    <div class="embed-responsive embed-responsive-1by1">
-    <iframe width="900" height="900" src="https://ltc-herren.one/nextcloud/index.php/apps/calendar/embed/xpzTca5bCNFftAqE"></iframe>
-    </div>
-
 ''')
