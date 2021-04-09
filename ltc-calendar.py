@@ -12,7 +12,10 @@ print('''
     <div class="row row-cols-1 row-cols-md-3 g-4">
 ''')
 
-for event in c.walk("VEVENT"):
+events = c.walk("VEVENT")
+events = sorted(events, key=lambda c: c.get("dtstart").dt, reverse=False)
+
+for event in events:
   s = event.decoded("dtstart")
   start = datetime.strftime(s, "%d.%m.%Y %H:%M")
   calname = "ltc-herren1" + datetime.strftime(s, "%Y%m%d") + ".ics"
