@@ -1,6 +1,7 @@
 from icalendar import Calendar, Event, vDatetime
 import requests
 from datetime import datetime
+import os
 
 url = "https://ltc-herren.one/nextcloud/remote.php/dav/public-calendars/xpzTca5bCNFftAqE/?export"
 c = Calendar.from_ical(requests.get(url).text)
@@ -15,6 +16,7 @@ print('''
 for event in c.walk("VEVENT"):
   s = event.decoded("dtstart")
   start = datetime.strftime(s, "%d.%m.%Y %H:%M")
+  calname = "ltc-herren1" + datetime.strftime(s, "%Y%m%d") + ".ics"
   print(f'''
   <div class="col">
     <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
@@ -22,6 +24,7 @@ for event in c.walk("VEVENT"):
       <div class="card-body">
         <h5 class="card-title">{event.get("summary")}</h5>
         <p class="card-text">{event.get("description")}</p>
+        <a href="{calname}" class="btn btn-primary">Event importieren</a>
       </div>
       <div class="card-footer">
         <small class="text-muted">Adresse: {event.get("location")}</small>
@@ -29,6 +32,14 @@ for event in c.walk("VEVENT"):
     </div>
     </div>
   ''')
+  cal = Calendar()
+  cal.add('prodid', '-//My calendar product//mxm.dk//')
+  cal.add('version', '2.0')
+  cal.add_component(event)
+  cwd = os.getcwd()
+  f = open(os.path.join(cwd, calname), 'wb')
+  f.write(cal.to_ical())
+  f.close()
 
 print('''
     </div>
