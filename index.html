@@ -20,11 +20,11 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="/index.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Gruppe und Termine
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/">2021</a>
+              <a class="dropdown-item" href="/index.html">2021</a>
               <a class="dropdown-item" href="/table-2020.html">2020</a>
               <a class="dropdown-item" href="/table-2019.html">2019</a>
             </div>
@@ -1243,7 +1243,13 @@
           var url = window.location;
           $('ul.navbar-nav a[href="'+ url +'"]').parent().addClass('active');
           $('ul.navbar-nav a').filter(function() {
-               return this.href == url;
+            console.log('orig href:' + this.href)
+            console.log('orig url:' + url)
+            console.log('href:' + String(this.href).substring(this.href.lastIndexOf('/') + 1) + ' url:' + String(url).substring(String(url).lastIndexOf('/') + 1));
+            const lastPathComponentURL = String(url).substring(String(url).lastIndexOf('/') + 1);
+            const lastPathComponentHref = String(this.href).substring(this.href.lastIndexOf('/') + 1);
+               //return this.href == url;
+               return lastPathComponentHref == lastPathComponentURL;
           }).parent().addClass('active');
       });
     </script> 

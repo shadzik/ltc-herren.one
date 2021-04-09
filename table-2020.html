@@ -91,7 +91,7 @@
       
         <tr>
           <td>
-            <img alt="Aufsteiger" border="0" title="Aufsteiger" src="/WebObjects/nuLiga.woa/Frameworks/nuLigaFramework.framework/WebServerResources/img/icons/up_11x11.gif?nlv=56f2c321" width="11" height="11">
+            <img alt="Aufsteiger" border="0" title="Aufsteiger" src="https://tvbb.liga.nu/WebObjects/nuLiga.woa/Frameworks/nuLigaFramework.framework/WebServerResources/img/icons/up_11x11.gif?nlv=56f2c321" width="11" height="11">
             &nbsp;</td>
           
             <td class="center">
@@ -1053,10 +1053,16 @@
           var url = window.location;
           $('ul.navbar-nav a[href="'+ url +'"]').parent().addClass('active');
           $('ul.navbar-nav a').filter(function() {
-               return this.href == url;
-          }).parent().addClass('active');
+            console.log('orig href:' + this.href)
+            console.log('orig url:' + url)
+            console.log('href:' + String(this.href).substring(this.href.lastIndexOf('/') + 1) + ' url:' + String(url).substring(String(url).lastIndexOf('/') + 1));
+            const lastPathComponentURL = String(url).substring(String(url).lastIndexOf('/') + 1);
+            const lastPathComponentHref = String(this.href).substring(this.href.lastIndexOf('/') + 1);
+               //return this.href == url;
+               return lastPathComponentHref == lastPathComponentURL;
+          }).parent().parent().addClass('active');
       });
     </script> 
-  </body>
+    </body>
 </html>
 
