@@ -8,7 +8,7 @@ c = Calendar.from_ical(requests.get(url).text)
 
 print('''
     <div class="container">
-    <h3>Auf einen Blick</h3>
+    <h3>Kalendar Events</h3>
     <div class="row row-cols-1 row-cols-md-3 g-4">
 ''')
 
