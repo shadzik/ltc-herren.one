@@ -1,0 +1,44 @@
+from icalendar import Calendar, Event, vDatetime
+import requests
+from datetime import datetime
+
+url = "https://ltc-herren.one/nextcloud/remote.php/dav/public-calendars/xpzTca5bCNFftAqE/?export"
+c = Calendar.from_ical(requests.get(url).text)
+
+
+print('''
+    <div class="container">
+    <h3>Auf einen Blick</h3>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+''')
+
+for event in c.walk("VEVENT"):
+  s = event.decoded("dtstart")
+  start = datetime.strftime(s, "%d.%m.%Y %H:%M")
+  print(f'''
+  <div class="col">
+    <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">{start}</div>
+      <div class="card-body">
+        <h5 class="card-title">{event.get("summary")}</h5>
+        <p class="card-text">{event.get("description")}</p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Adresse: {event.get("location")}</small>
+      </div>
+    </div>
+    </div>
+  ''')
+
+print('''
+    </div>
+
+    <div class="mb-4"></div>
+    <h3>Ganzer Kalendar</h3>
+    </div> <!-- container -->
+
+    <div class="embed-responsive embed-responsive-1by1">
+    <iframe width="900" height="900" src="https://ltc-herren.one/nextcloud/index.php/apps/calendar/embed/xpzTca5bCNFftAqE"></iframe>
+    </div>
+
+''')
