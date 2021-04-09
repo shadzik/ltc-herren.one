@@ -6,7 +6,6 @@ import os
 url = "https://ltc-herren.one/nextcloud/remote.php/dav/public-calendars/xpzTca5bCNFftAqE/?export"
 c = Calendar.from_ical(requests.get(url).text)
 
-
 print('''
     <div class="container">
     <h3>Auf einen Blick</h3>
@@ -41,7 +40,13 @@ for event in c.walk("VEVENT"):
   f.write(cal.to_ical())
   f.close()
 
-print('''
+print(f'''
+    </div>
+
+    <div class="row">
+      <div class="col text-center">
+        <a href="{url}" class="btn btn-primary">Alle Events importieren</a>
+      </div>
     </div>
 
     <div class="mb-4"></div>
