@@ -19,7 +19,7 @@ for event in c.walk("VEVENT"):
   calname = "ltc-herren1" + datetime.strftime(s, "%Y%m%d") + ".ics"
   print(f'''
   <div class="col">
-    <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+    <div class="card text-dark bg-light mb-3">
     <div class="card-header">{start}</div>
       <div class="card-body">
         <h5 class="card-title">{event.get("summary")}</h5>
