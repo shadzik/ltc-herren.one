@@ -5,6 +5,8 @@ from icalendar import Calendar, Event, Alarm
 from datetime import datetime, timedelta
 import os
 import uuid
+from pathlib import Path
+home = str(Path.home())
 
 url = "https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2021&group=1635442"
 
@@ -23,7 +25,7 @@ calendarname = "ltc-herren1-full.ics"
 
 options = Options()
 options.headless = True
-driver = webdriver.Firefox(options=options, executable_path='/Users/bartek/bin/geckodriver')
+driver = webdriver.Firefox(options=options, executable_path=home+'/bin/geckodriver')
 driver.get(url)
 
 rows = len(driver.find_elements_by_xpath(xpath + "/tbody/tr"))
