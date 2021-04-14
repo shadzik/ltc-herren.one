@@ -33,7 +33,7 @@ rows = len(driver.find_elements_by_xpath(xpath + "/tbody/tr"))
 is_host = False
 tmp_datetime = ""
 
-def write_calendar(summary: str, start: datetime, end: datetime, description: str, location: str):
+def write_calendar(summary: str, start: datetime, end: datetime, description: str, location: str, oponent_info: str):
     calname = "ltc-herren1-" + datetime.strftime(start, "%Y%m%d") + ".ics"
     t_cal = Calendar()
     t_cal.add('prodid', '-//LTC Herren 1 Kalender//ltc-scraper.py by Bartosz Swiatek//')
@@ -48,6 +48,7 @@ def write_calendar(summary: str, start: datetime, end: datetime, description: st
     event.add('last-modified', datetime.now())
     event.add('dtstamp', datetime.now())
     event.add('location', location)
+    event.add('comment', oponent_info) 
     alarm = Alarm()
     alarm.add('action', 'DISPLAY')
     alarm.add('TRIGGER;RELATED=START', '-P1D')
@@ -89,7 +90,7 @@ def write_html(calendar: Calendar):
             <a href="{calname}" class="btn btn-primary">Event importieren</a>
           </div>
           <div class="card-footer">
-            <small class="text-muted"><b>Infos zum Gegner:</b><br/><br/>{event.get("location")}</small>
+            <small class="text-muted"><b>Infos zum Gegner:</b><br/><br/>{event.get("comment")}</small>
           </div>
         </div>
         </div>
@@ -111,15 +112,19 @@ def write_html(calendar: Calendar):
     f.write(end_html)
     f.close()
 
-def find_location(club: str) -> str:
+def find_location(club: str) -> (str, str):
   xpath = "//*[@id='content-row2']/table[1]/tbody"
   club_xpath = f"//*[ text() = '{club}' ]"
   address_xpath = "//*[@id='content-row2']/table[1]/tbody/tr[1]/td[2]"
   elem = driver.find_element_by_xpath(xpath)
   club_url = elem.find_element_by_xpath(club_xpath).get_attribute('href')
   second_driver.get(club_url)
-  address = second_driver.find_element_by_xpath(address_xpath).text
-  return address
+  address_elem = second_driver.find_element_by_xpath(address_xpath)
+  hrefs = address_elem.find_element_by_xpath("//*[@id='content-row2']/table[1]/tbody/tr[1]/td[2]/a[1]")
+  second_driver.execute_script("arguments[0].setAttribute('href', arguments[1])", hrefs, hrefs.get_attribute('href'))
+  address_html = address_elem.get_attribute('innerHTML')
+  address = address_elem.text
+  return (address, address_html)
 
 
 for t_row in range(2, (rows + 1)):
@@ -143,14 +148,16 @@ for t_row in range(2, (rows + 1)):
   if found_event:
     if datestr.isspace():
       datestr = tmp_datetime
-    location = find_location(oponent)
+    location_tupel = find_location(oponent)
+    location = location_tupel[0]
+    location_html = location_tupel[1]
     date = datetime.strptime(datestr, "%d.%m.%Y %H:%M")
     meetingDate = date - timedelta(minutes=30)
     end = date + timedelta(hours=8)
     meetingTimeStr = datetime.strftime(meetingDate, "%H:%M")
     summary = ("Heimspiel " if is_host else "Auswärtsspiel ") + "gegen " + oponent
     description = "Bitte einen Tag vor dem Spiel gut ausruhen und viel Schlaf bekommen. Treffen ist um " + meetingTimeStr + (" auf unserer Anlage." if is_host else " beim " + oponent)
-    write_calendar(summary=summary, start=date, end=end, description=description, location=location)
+    write_calendar(summary=summary, start=date, end=end, description=description, location=location, oponent_info=location_html)
   
 cwd = os.getcwd()
 f = open(os.path.join(cwd, calendarname), 'wb')
