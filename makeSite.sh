@@ -1,7 +1,8 @@
 cat header.html table.html footer.html > index.html
 
 source /home/users/ltcherren/venv/bin/activate
-python3 ltc-calendar.py > kalender-content.html
+# python3 ltc-calendar.py > kalender-content.html
+python3 ltc-events.py
 
 cat header.html kalender-content.html footer.html > kalender.html
 cat header.html kontakt-content.html footer.html > kontakt.html
