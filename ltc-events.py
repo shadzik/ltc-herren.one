@@ -35,7 +35,6 @@ tmp_datetime = ""
 
 def write_calendar(summary: str, start: datetime, end: datetime, description: str, location: str):
     calname = "ltc-herren1-" + datetime.strftime(start, "%Y%m%d") + ".ics"
-    dayBefore = start - timedelta(days=1)
     t_cal = Calendar()
     t_cal.add('prodid', '-//LTC Herren 1 Kalender//ltc-scraper.py by Bartosz Swiatek//')
     t_cal.add('version', '2.0')
@@ -49,10 +48,8 @@ def write_calendar(summary: str, start: datetime, end: datetime, description: st
     event.add('last-modified', datetime.now())
     event.add('dtstamp', datetime.now())
     event.add('location', location)
-    # TODO add location
     alarm = Alarm()
     alarm.add('action', 'DISPLAY')
-    # alarm.add('trigger', dayBefore)
     alarm.add('TRIGGER;RELATED=START', '-P1D')
     alarm.add('description', 'Erinnerung zum Punktspiel')
     event.add_component(alarm)
