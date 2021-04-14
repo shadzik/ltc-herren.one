@@ -93,7 +93,7 @@ def write_html(calendar: Calendar):
             <a href="{calname}" class="btn btn-primary">Event importieren</a>
           </div>
           <div class="card-footer">
-            <small class="text-muted"><b>Infos zum Gegner:</b><br/><br/>{event.get("comment")}</small>
+            <small class="text-muted"><b>Infos zum Gegner:</b><br/>{event.get("comment")}</small>
           </div>
         </div>
         </div>
