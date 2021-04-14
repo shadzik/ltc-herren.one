@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 from icalendar import Calendar, Event, Alarm
 from datetime import datetime, timedelta
 import os
@@ -25,8 +26,10 @@ calendarname = "ltc-herren1-full.ics"
 
 options = Options()
 options.headless = True
-driver = webdriver.Firefox(options=options, executable_path=home+'/bin/geckodriver')
-second_driver = webdriver.Firefox(options=options, executable_path=home+'/bin/geckodriver')
+# driver = webdriver.Firefox(options=options, executable_path=home+'/bin/geckodriver')
+# second_driver = webdriver.Firefox(options=options, executable_path=home+'/bin/geckodriver')
+driver = webdriver.Chrome(options=options, executable_path=home+'/bin/chromedriver')
+second_driver = webdriver.Chrome(options=options, executable_path=home+'/bin/chromedriver')
 driver.get(url)
 
 rows = len(driver.find_elements_by_xpath(xpath + "/tbody/tr"))
