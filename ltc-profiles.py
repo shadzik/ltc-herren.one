@@ -65,20 +65,20 @@ def write_html(players):
   html_start = '''
     <div class="container">
     <h3>Team</h3>
-    <div class="row row-cols-lg-3">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
   '''
   f.write(html_start)
 
   for player in players:
     player_html = f'''
-      <div class="card" style="border-radius: 15px;">
-        <div class="card-body p-4">
+      <div class="col">
+      <div class="card text-dark bg-light mb-3">
+        <div class="card-body text-dark bg-light">
           <div class="d-flex text-black">
             <div class="flex-grow-1 ms-3">
               <h5 class="mb-1">{player.name}</h5>
               <p class="mb-2 pb-1" style="color: #2b2a2a;">{player.lk}</p>
-              <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
-                style="background-color: #efefef;">
+              <div class="card-header d-flex align-items-center">
                 <div>
                   <p class="small text-muted mb-1">Einzel</p>
                   <p class="mb-0">{player.single}</p>
@@ -96,6 +96,7 @@ def write_html(players):
           </div>
         </div>
       </div>
+    </div>
     '''
     f.write(player_html)
 

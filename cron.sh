@@ -9,6 +9,7 @@ MD5=$(md5sum table.html.tmp |awk '{print $1}')
 MD5O=$(md5sum table.html |awk '{print $1}')
 
 if [ $MD5 = $MD5O ]; then
+  ./makeSite.sh
   exit 0
 fi
 
