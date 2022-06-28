@@ -8,8 +8,14 @@ from pathlib import Path
 home = str(Path.home())
 
 url = "https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/teamPortrait?team=2775110&championship=TVBB+Sommer+2022&group=1733747"
+lk_url = "https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/clubRankinglistLK?federation=TVBB&club=12103"
 
 profile_ids = ["18603557", "18551271", "17702734", "17702749", "18996974", "17952135", "18752536", "18003347", "18152123", "18252420"]
+
+lk_table_xpath = "//*[@id='content-row2']/table/tbody/tr/td[1]/table"
+lk_table_before_xpath = "//*[@id='content-row2']/table/tbody/tr/td[1]/table/tbody/tr["
+lk_update_xpath = "]/td[2]"
+id_update_xpath = "]/td[3]"
 
 xpath = "//*[@id='content-row2']/table[3]"
 before_xpath = "//*[@id='content-row2']/table[3]/tbody/tr["
@@ -39,6 +45,19 @@ class Player:
     self.double = double
     self.overall = overall
 
+def get_current_lks(players):
+  second_driver.get(lk_url)
+  rows = len(second_driver.find_elements_by_xpath(lk_table_xpath + "/tbody/tr"))
+  for t_row in range(2, (rows + 1)):
+    final_id_xpath = lk_table_before_xpath + str(t_row) + id_update_xpath
+    final_lk_xpath = lk_table_before_xpath + str(t_row) + lk_update_xpath
+    profile_id = second_driver.find_element_by_xpath(final_id_xpath).text.strip()
+    profile_lk = second_driver.find_element_by_xpath(final_lk_xpath).text
+    for player in players:
+      if player.id == profile_id:
+        player.lk = profile_lk
+  second_driver.quit()
+
 
 def write_html(players):
   cwd = os.getcwd()
@@ -46,7 +65,7 @@ def write_html(players):
   html_start = '''
     <div class="container">
     <h3>Team</h3>
-    <div class="row row-cols-md-3">
+    <div class="row row-cols-lg-3">
   '''
   f.write(html_start)
 
@@ -109,4 +128,5 @@ for t_row in range(2, (rows + 1)):
     players.append(player)
 
 driver.quit()
+get_current_lks(players)
 write_html(players)
