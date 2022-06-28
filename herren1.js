@@ -41,9 +41,10 @@ async function scrapeTable(url) {
   console.log("</div>");
 }
 
-
+// 2022 Herren 30 2
+scrapeTable('https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2022&group=1733747');
 // 2021
-scrapeTable('https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2021&group=1635442');
+//scrapeTable('https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2021&group=1635442');
 // 2020
 // scrapeTable('https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2020&group=1539516');
 // 2019

@@ -9,7 +9,7 @@ import uuid
 from pathlib import Path
 home = str(Path.home())
 
-url = "https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2021&group=1635442"
+url = "https://tvbb.liga.nu/cgi-bin/WebObjects/nuLigaTENDE.woa/wa/groupPage?championship=TVBB+Sommer+2022&group=1733747"
 
 xpath = "//*[@id='content-row2']/table[2]"
 before_xpath = "//*[@id='content-row2']/table[2]/tbody/tr["
@@ -20,9 +20,9 @@ guest_xpath = "]/td[5]"
 club = "Lichtenberger Tennisclub"
 
 cal = Calendar()
-cal.add('prodid', '-//LTC Herren 1 Kalender//ltc-scraper.py by Bartosz Swiatek//')
+cal.add('prodid', '-//LTC Herren 30 2 Kalender//ltc-scraper.py by Bartosz Swiatek//')
 cal.add('version', '2.0')
-calendarname = "ltc-herren1-full.ics"
+calendarname = "ltc-herren302-full.ics"
 
 options = Options()
 options.headless = True
@@ -37,9 +37,9 @@ is_host = False
 tmp_datetime = ""
 
 def write_calendar(summary: str, start: datetime, end: datetime, description: str, location: str, oponent_info: str):
-    calname = "ltc-herren1-" + datetime.strftime(start, "%Y%m%d") + ".ics"
+    calname = "ltc-herren302-" + datetime.strftime(start, "%Y%m%d") + ".ics"
     t_cal = Calendar()
-    t_cal.add('prodid', '-//LTC Herren 1 Kalender//ltc-scraper.py by Bartosz Swiatek//')
+    t_cal.add('prodid', '-//LTC Herren 30 II Kalender//ltc-scraper.py by Bartosz Swiatek//')
     t_cal.add('version', '2.0')
     t_cal.add('method', 'request')
     event = Event()
@@ -82,7 +82,7 @@ def write_html(calendar: Calendar):
     for event in events:
       s = event.decoded("dtstart")
       start = datetime.strftime(s, "%d.%m.%Y %H:%M")
-      calname = "ltc-herren1-" + datetime.strftime(s, "%Y%m%d") + ".ics"
+      calname = "ltc-herren302-" + datetime.strftime(s, "%Y%m%d") + ".ics"
       html_event = f'''
       <div class="col">
         <div class="card text-dark bg-light mb-3">
@@ -159,7 +159,7 @@ for t_row in range(2, (rows + 1)):
     end = date + timedelta(hours=8)
     meetingTimeStr = datetime.strftime(meetingDate, "%H:%M")
     summary = ("Heimspiel " if is_host else "Auswärtsspiel ") + "gegen " + oponent
-    description = "Bitte einen Tag vor dem Spiel gut ausruhen und viel Schlaf bekommen. Treffen ist um " + meetingTimeStr + (" auf unserer Anlage." if is_host else " beim " + oponent)
+    description = "Bitte einen Tag vor dem Spiel gut ausruhen und viel Schlaf bekommen. Treffen ist um " + meetingTimeStr + (" auf unserer Anlage." if is_host else " beim " + oponent) + "."
     write_calendar(summary=summary, start=date, end=end, description=description, location=location, oponent_info=location_html)
   
 cwd = os.getcwd()

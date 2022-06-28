@@ -2,7 +2,7 @@
 PATH=/home/users/ltcherren/.nvm/versions/node/v15.4.0/bin:/home/users/ltcherren/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11R6/bin:/usr/local/bin:/home/users/ltcherren/bin
 export PATH
 
-cd /home/users/ltcherren/ltc-herren.one
+cd /home/users/ltcherren/herren302
 
 node herren1.js > table.html.tmp
 MD5=$(md5sum table.html.tmp |awk '{print $1}')
