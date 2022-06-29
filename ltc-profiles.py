@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import os
 import uuid
+import re
 from pathlib import Path
 home = str(Path.home())
 
@@ -16,6 +17,7 @@ lk_table_xpath = "//*[@id='content-row2']/table/tbody/tr/td[1]/table"
 lk_table_before_xpath = "//*[@id='content-row2']/table/tbody/tr/td[1]/table/tbody/tr["
 lk_update_xpath = "]/td[2]"
 id_update_xpath = "]/td[3]"
+old_lk_update_xpath = "]/td[8]/span[1]"
 
 xpath = "//*[@id='content-row2']/table[3]"
 before_xpath = "//*[@id='content-row2']/table[3]/tbody/tr["
@@ -37,13 +39,22 @@ driver.get(url)
 rows = len(driver.find_elements_by_xpath(xpath + "/tbody/tr"))
 
 class Player:
-  def __init__(self, id: str, name: str, lk: str, single: str, double: str, overall: str):
+  def __init__(self, id: str, name: str, lk: str, single: str, double: str, overall: str, old_lk: str = ""):
     self.id = id
     self.name = name
     self.lk = lk
     self.single = single
     self.double = double
     self.overall = overall
+    self.old_lk = old_lk
+
+  def lkicon(self) -> str:
+    if float(self.lk) > float(self.old_lk):
+      return "arrow-down-circle"
+    elif float(self.lk) < float(self.old_lk):
+      return "arrow-up-circle"
+    else:
+      return "dash-circle"
 
 def get_current_lks(players):
   second_driver.get(lk_url)
@@ -51,11 +62,16 @@ def get_current_lks(players):
   for t_row in range(2, (rows + 1)):
     final_id_xpath = lk_table_before_xpath + str(t_row) + id_update_xpath
     final_lk_xpath = lk_table_before_xpath + str(t_row) + lk_update_xpath
+    final_old_lk_xpath = lk_table_before_xpath + str(t_row) + old_lk_update_xpath
     profile_id = second_driver.find_element_by_xpath(final_id_xpath).text.strip()
     profile_lk = second_driver.find_element_by_xpath(final_lk_xpath).text
+    profile_lk = profile_lk.replace('LK', '').replace(',', '.')
+    profile_old_lk = second_driver.find_element_by_xpath(final_old_lk_xpath).text.strip()
+    profile_old_lk = re.sub(r'.*LK', '', profile_old_lk).replace(',','.')
     for player in players:
       if player.id == profile_id:
         player.lk = profile_lk
+        player.old_lk = profile_old_lk
   second_driver.quit()
 
 
@@ -77,7 +93,7 @@ def write_html(players):
           <div class="d-flex text-black">
             <div class="flex-grow-1 ms-3">
               <h5 class="mb-1">{player.name}</h5>
-              <p class="mb-2 pb-1" style="color: #2b2a2a;">{player.lk}</p>
+              <p class="mb-2 pb-1" style="color: #2b2a2a;"><i class="bi-{player.lkicon()}"></i> LK{player.lk} (war LK{player.old_lk})</p>
               <div class="card-header d-flex align-items-center">
                 <div>
                   <p class="small text-muted mb-1">Einzel</p>
