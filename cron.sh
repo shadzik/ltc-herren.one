@@ -19,6 +19,6 @@ fi
 DATE=$(date)
 echo "${DATE}: Updating..."
 echo "${DATE}: Moving new table"
-mv table.html.tmp table.html
+cp table.html.tmp table.html
 echo "${DATE}: Creating site"
 ./makeSite.sh
