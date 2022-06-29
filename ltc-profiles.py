@@ -50,11 +50,11 @@ class Player:
 
   def lkicon(self) -> str:
     if float(self.lk) > float(self.old_lk):
-      return "arrow-down-circle"
+      return "fa-solid fa-arrow-trend-down"
     elif float(self.lk) < float(self.old_lk):
-      return "arrow-up-circle"
+      return "fa-solid fa-arrow-trend-up"
     else:
-      return "dash-circle"
+      return "fa-solid fa-minus"
 
   def lk_value(self) -> float:
       return float(self.lk)
@@ -97,7 +97,7 @@ def write_html(players):
           <div class="d-flex text-black">
             <div class="flex-grow-1 ms-3">
               <h5 class="mb-1">{player.name}</h5>
-              <p class="mb-2 pb-1" style="color: #2b2a2a;"><i class="bi-{player.lkicon()}"></i> LK{player.lk} (war LK{player.old_lk})</p>
+              <p class="mb-2 pb-1" style="color: #2b2a2a;"><i class="{player.lkicon()}"></i> LK{player.lk} (war LK{player.old_lk})</p>
               <div class="card-header d-flex align-items-center">
                 <div>
                   <p class="small text-muted mb-1">Einzel</p>

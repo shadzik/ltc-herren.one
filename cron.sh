@@ -12,7 +12,7 @@ MD5O=$(md5sum table.html |awk '{print $1}')
 if [ $MD5 = $MD5O ]; then
   source /home/users/ltcherren/venv/bin/activate
   python3 ltc-profiles.py
-
+  cat header.html player-content.html footer.html > team.html
   exit 0
 fi
 
