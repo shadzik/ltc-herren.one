@@ -56,6 +56,9 @@ class Player:
     else:
       return "dash-circle"
 
+  def lk_value(self) -> float:
+      return float(self.lk)
+
 def get_current_lks(players):
   second_driver.get(lk_url)
   rows = len(second_driver.find_elements_by_xpath(lk_table_xpath + "/tbody/tr"))
@@ -72,6 +75,7 @@ def get_current_lks(players):
       if player.id == profile_id:
         player.lk = profile_lk
         player.old_lk = profile_old_lk
+        players.sort(key=lambda x: x.lk_value(), reverse=False)
   second_driver.quit()
 
 
@@ -136,6 +140,7 @@ for t_row in range(2, (rows + 1)):
     final_overall_xpath = before_xpath + str(t_row) + overall_xpath
 
     profile_lk = driver.find_element_by_xpath(final_lk_xpath).text
+    profile_lk = profile_lk.replace('LK', '').replace(',', '.')
     profile_name = driver.find_element_by_xpath(final_name_xpath).text
     profile_single = driver.find_element_by_xpath(final_single_xpath).text
     profile_double = driver.find_element_by_xpath(final_double_xpath).text
