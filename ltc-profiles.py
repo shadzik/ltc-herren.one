@@ -54,7 +54,7 @@ class Player:
     elif float(self.lk) < float(self.old_lk):
       return "fa-solid fa-arrow-trend-up"
     else:
-      return "fa-solid fa-minus"
+      return "fa-solid fa-arrow-right-long"
 
   def lk_value(self) -> float:
       return float(self.lk)
