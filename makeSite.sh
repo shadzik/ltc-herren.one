@@ -1,8 +1,6 @@
 #!/bin/bash
 PATH=/home/users/ltcherren/node_modules/puppeteer/.local-chromium/linux-848005/chrome-linux:$PATH
 
-cat header.html table.html footer.html > index.html
-
 source /home/users/ltcherren/venv/bin/activate
 # python3 ltc-calendar.py > kalender-content.html
 python3 ltc-events.py
