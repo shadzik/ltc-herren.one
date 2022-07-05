@@ -23,13 +23,20 @@ async function scrapeTable(url) {
     })
 	  const data = await page.evaluate(() => {
 	    const anchors = Array.from(document.querySelectorAll('table tbody tr td a'));
+      const imganchors = Array.from(document.querySelectorAll('table tbody tr td img'));
 	    anchors.map(td => {
         var href = td.getAttribute('href');
         if (!href.includes('tvbb.liga.nu')) {
           td.setAttribute('href', "https://tvbb.liga.nu" + td.getAttribute('href'));
         }
       });
-	    const links = anchors.map(td => td.getAttribute('href'));
+      imganchors.map(img => {
+        var src = img.getAttribute('src');
+        if (!src.includes('tvbb.liga.nu')) {
+          img.setAttribute('src', "https://tvbb.liga.nu" + img.getAttribute('src'))
+        }
+      });
+	    const links = anchors.map(td => td.getAttribute('href')); 
 	    return links;
 	  })
 	  const result = await page.evaluate(el => el.outerHTML, table[0]);

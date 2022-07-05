@@ -1,6 +1,6 @@
 #!/bin/bash
-#PATH=/home/users/ltcherren/.nvm/versions/node/v15.4.0/bin:/home/users/ltcherren/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11R6/bin:/usr/local/bin:/home/users/ltcherren/bin
-PATH=/home/users/ltcherren/node_modules/puppeteer/.local-chromium/linux-848005/chrome-linux:$PATH
+PATH=/home/users/ltcherren/.nvm/versions/node/v15.4.0/bin:/home/users/ltcherren/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11R6/bin:/usr/local/bin:/home/users/ltcherren/bin
+#PATH=/home/users/ltcherren/node_modules/puppeteer/.local-chromium/linux-848005/chrome-linux:$PATH
 export PATH
 
 cd /home/users/ltcherren/herren302
