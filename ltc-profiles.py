@@ -17,7 +17,7 @@ lk_table_xpath = "//*[@id='content-row2']/table/tbody/tr/td[1]/table"
 lk_table_before_xpath = "//*[@id='content-row2']/table/tbody/tr/td[1]/table/tbody/tr["
 lk_update_xpath = "]/td[2]"
 id_update_xpath = "]/td[3]"
-old_lk_update_xpath = "]/td[8]/span[1]"
+old_lk_update_xpath = "]/td[8]/span[2]"
 
 xpath = "//*[@id='content-row2']/table[3]"
 before_xpath = "//*[@id='content-row2']/table[3]/tbody/tr["
